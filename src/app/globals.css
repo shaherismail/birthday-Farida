@@ -1,0 +1,548 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TAILWIND v4 THEME CONFIGURATION
+   In v4, theme tokens are defined here in CSS using @theme,
+   NOT in tailwind.config.ts. This replaces the JS config.
+   ============================================================ */
+@theme {
+  /* === Font Families === */
+  --font-display: "Boogaloo", "Fredoka One", cursive;
+  --font-script: "Dancing Script", cursive;
+  --font-pacifico: "Pacifico", cursive;
+  --font-body: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+
+  /* === Colors === */
+  --color-pink-primary: #e8717a;
+  --color-pink-light: #f09a9d;
+  --color-pink-lighter: #f8c4c7;
+  --color-pink-dark: #c94b57;
+  --color-pink-darker: #a83040;
+  --color-red-accent: #cc2936;
+  --color-red-soft: #e55d6a;
+  --color-cream: #fdf0f0;
+  --color-white-soft: #fff5f5;
+  --color-text-dark: #2d1b1e;
+  --color-text-medium: #5a3040;
+  --color-text-light: #8b5563;
+
+  /* === Border Radius === */
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+
+  /* === Keyframe Animations === */
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2.5s ease-in-out infinite;
+  --animate-heartbeat: heartbeat 1.5s ease-in-out infinite;
+  --animate-balloon: balloon-sway 3s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(232, 113, 122, 0.4); }
+    50% { box-shadow: 0 0 40px rgba(232, 113, 122, 0.8); }
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.08); }
+    70% { transform: scale(1); }
+  }
+  @keyframes balloon-sway {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg) translateY(-8px); }
+  }
+}
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES — Design Tokens
+   (Separate from @theme — used directly in component CSS)
+   ============================================================ */
+:root {
+  /* === Glow & Shadow === */
+  --pink-glow: rgba(232, 113, 122, 0.4);
+  --pink-glow-strong: rgba(232, 113, 122, 0.7);
+  --red-glow: rgba(204, 41, 54, 0.3);
+  --shadow-soft: 0 4px 24px rgba(232, 113, 122, 0.2);
+  --shadow-card: 0 8px 40px rgba(45, 27, 30, 0.12);
+  --shadow-float: 0 20px 60px rgba(232, 113, 122, 0.25);
+
+  /* === Gradients === */
+  --gradient-pink: linear-gradient(135deg, #e8717a 0%, #f09a9d 50%, #c94b57 100%);
+  --gradient-pink-light: linear-gradient(180deg, #f8c4c7 0%, #f09a9d 100%);
+  --gradient-hero-bg: linear-gradient(160deg, #fff5f5 0%, #fde8e8 40%, #ffd6d8 100%);
+  --gradient-intro: linear-gradient(135deg, #d45f6a 0%, #e8717a 50%, #c94b57 100%);
+  --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,240,242,0.95) 100%);
+
+  /* === Animation Easing === */
+  --ease-cinematic: cubic-bezier(0.43, 0.13, 0.23, 0.96);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration-slow: 1.2s;
+  --duration-medium: 0.8s;
+  --duration-fast: 0.4s;
+
+  /* === Spacing === */
+  --section-padding: clamp(4rem, 10vw, 8rem);
+  --content-max: 1200px;
+}
+
+/* ============================================================
+   BASE RESET & GLOBAL STYLES
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  color: #2d1b1e;
+  background: #fff5f5;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdf0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e8717a;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c94b57;
+}
+
+/* ============================================================
+   TYPOGRAPHY SYSTEM
+   ============================================================ */
+
+.font-display {
+  font-family: "Boogaloo", "Fredoka One", cursive;
+  letter-spacing: 0.02em;
+}
+
+.font-script {
+  font-family: "Dancing Script", cursive;
+  letter-spacing: 0.01em;
+}
+
+.font-pacifico {
+  font-family: "Pacifico", cursive;
+}
+
+.font-serif-display {
+  font-family: "Playfair Display", serif;
+}
+
+.font-body {
+  font-family: "Inter", sans-serif;
+}
+
+.text-hero {
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  line-height: 0.95;
+  font-family: "Boogaloo", cursive;
+  font-weight: 400;
+}
+
+.text-hero-sub {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 1;
+  font-family: "Boogaloo", cursive;
+  font-weight: 400;
+}
+
+.text-script-lg {
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+}
+
+.text-script-md {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-family: "Dancing Script", cursive;
+  font-weight: 600;
+}
+
+/* ============================================================
+   GLASSMORPHISM SYSTEM
+   ============================================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-card);
+}
+
+.glass-pink {
+  background: rgba(248, 196, 199, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(232, 113, 122, 0.2);
+}
+
+.glass-dark {
+  background: rgba(45, 27, 30, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(232, 113, 122, 0.2);
+}
+
+/* ============================================================
+   GLOW SYSTEM
+   ============================================================ */
+.glow-pink {
+  box-shadow: 0 0 20px var(--pink-glow), 0 0 40px var(--pink-glow);
+}
+
+.glow-pink-strong {
+  box-shadow: 0 0 30px var(--pink-glow-strong), 0 0 60px var(--pink-glow);
+}
+
+.text-glow-pink {
+  text-shadow: 0 0 20px var(--pink-glow-strong), 0 0 40px var(--pink-glow);
+}
+
+.text-glow-white {
+  text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.4);
+}
+
+/* ============================================================
+   GRADIENT UTILITIES
+   ============================================================ */
+.bg-pink-gradient {
+  background: var(--gradient-intro);
+}
+
+.bg-hero-gradient {
+  background: var(--gradient-hero-bg);
+}
+
+.bg-pink-radial {
+  background: radial-gradient(ellipse at center, #f09a9d 0%, #e8717a 50%, #c94b57 100%);
+}
+
+/* ============================================================
+   ADDITIONAL ANIMATION KEYFRAMES (CSS only)
+   ============================================================ */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes float-horizontal {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(10px); }
+}
+
+@keyframes pulse-glow-text {
+  0%, 100% { text-shadow: 0 0 10px var(--pink-glow); }
+  50% { text-shadow: 0 0 30px var(--pink-glow-strong), 0 0 60px var(--pink-glow); }
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(20px, -15px) scale(1.05); }
+  50% { transform: translate(-10px, -25px) scale(0.98); }
+  75% { transform: translate(15px, -10px) scale(1.02); }
+}
+
+@keyframes card-open {
+  0% { transform: perspective(1000px) rotateY(-90deg); opacity: 0; }
+  100% { transform: perspective(1000px) rotateY(0deg); opacity: 1; }
+}
+
+/* ============================================================
+   ANIMATION UTILITY CLASSES
+   ============================================================ */
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-horizontal {
+  animation: float-horizontal 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+.animate-orb-drift {
+  animation: orb-drift 8s ease-in-out infinite;
+}
+
+.animate-balloon {
+  animation: balloon-sway 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   SCROLL LOCK UTILITY
+   ============================================================ */
+body.scroll-locked {
+  overflow: hidden;
+}
+
+/* ============================================================
+   SECTION SYSTEM
+   ============================================================ */
+.section-fullscreen {
+  min-height: 100svh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+}
+
+/* ============================================================
+   BUTTON SYSTEM
+   ============================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: #e8717a;
+  color: white;
+  border-radius: 50px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(232, 113, 122, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 113, 122, 0.6);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: #e8717a;
+  border: 2px solid #e8717a;
+  border-radius: 50px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: #e8717a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 113, 122, 0.4);
+}
+
+/* ============================================================
+   CARD SYSTEM
+   ============================================================ */
+.card-glass {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,240,242,0.95) 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.card-hover {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-float);
+}
+
+/* ============================================================
+   IMAGE SYSTEM
+   ============================================================ */
+.img-circle {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255,255,255,0.9);
+  box-shadow: 0 8px 30px rgba(232, 113, 122, 0.3);
+}
+
+/* ============================================================
+   DECORATIVE ELEMENTS
+   ============================================================ */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.orb-white {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.orb-red {
+  background: rgba(204, 41, 54, 0.7);
+}
+
+.orb-pink {
+  background: rgba(232, 113, 122, 0.5);
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* ============================================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: clamp(3rem, 8vw, 5rem);
+  }
+  .text-hero {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+  .text-hero-sub {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+}
+
+/* ============================================================
+   SELECTION STYLES
+   ============================================================ */
+::selection {
+  background: rgba(232, 113, 122, 0.3);
+  color: #a83040;
+}
+
+/* ============================================================
+   MUSIC BUTTON
+   ============================================================ */
+.music-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(232, 113, 122, 0.9);
+  border: 2px solid rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(232, 113, 122, 0.5);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(232, 113, 122, 0.7);
+}
+
+/* ============================================================
+   GRADIENT TEXT
+   ============================================================ */
+.text-gradient-pink {
+  background: linear-gradient(135deg, #c94b57 0%, #e8717a 50%, #f09a9d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-dark-pink {
+  background: linear-gradient(135deg, #a83040 0%, #c94b57 50%, #e8717a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
