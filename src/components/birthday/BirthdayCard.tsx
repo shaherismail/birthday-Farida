@@ -53,31 +53,19 @@ function CardLeftPage() {
   const cardTeaser = useConfigStore((s) => s.cardTeaser);
   return (
     <div
-      style={{
-        flex: 1,
-        padding: "2rem",
-        background: "linear-gradient(160deg, #fff0f2 0%, #fde8ea 100%)",
-        borderRight: "2px solid rgba(232, 113, 122, 0.2)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-        minHeight: "380px",
-        position: "relative",
-        borderRadius: "16px 0 0 16px",
-      }}
+      className="flex-1 p-6 md:p-8 bg-gradient-to-br from-[#fff0f2] to-[#fde8ea] border-b md:border-b-0 md:border-r border-[#e8717a]/20 flex flex-col items-center justify-between min-h-[260px] md:min-h-[380px] relative rounded-t-[20px] md:rounded-l-[20px] md:rounded-tr-none w-full"
     >
       <HeartDecor className="absolute top-4 right-4" />
-      <div style={{ textAlign: "center", width: "100%" }}>
-        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: "0.9rem", color: "#5a3040", marginBottom: "0.5rem" }}>
+      <div className="text-center w-full">
+        <p className="font-body font-semibold text-xs md:text-sm text-[#5a3040] mb-1">
           Dear {personNameDisplay}
         </p>
-        <p className="font-script" style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.5rem)", color: "#e8717a", fontWeight: 700, transform: "rotate(-3deg)", lineHeight: 1.2 }}>
+        <p className="font-script text-3xl md:text-4xl text-[#e8717a] font-bold -rotate-2 leading-tight">
           Happy<br />Birthday!
         </p>
       </div>
       <CardProfilePhoto size={80} />
-      <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.8rem", color: "#8b5563", textAlign: "center", fontStyle: "italic" }}>
+      <p className="font-body text-xs text-[#8b5563] text-center italic mt-2 px-4 leading-relaxed">
         {cardTeaser}
       </p>
       <HeartDecor className="absolute bottom-4 left-4" />
@@ -90,17 +78,8 @@ function CardRightPage() {
   const cardMessage = useConfigStore((s) => s.cardMessage);
   return (
     <motion.div
+      className="flex-1 p-6 md:p-8 bg-white flex flex-col gap-4 min-h-[350px] md:min-h-[380px] relative rounded-b-[20px] md:rounded-r-[20px] md:rounded-bl-none origin-top md:origin-left w-full"
       style={{
-        flex: 1,
-        padding: "2rem",
-        background: "white",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        minHeight: "380px",
-        position: "relative",
-        borderRadius: "0 16px 16px 0",
-        transformOrigin: "left center",
         perspective: "1200px",
       }}
       initial={{ rotateY: -90, opacity: 0 }}
@@ -108,18 +87,21 @@ function CardRightPage() {
       transition={{ rotateY: { duration: 0.9, ease: EASE_CINEMATIC }, opacity: { duration: 0.4 }, delay: 0.9 }}
     >
       <HeartDecor className="absolute top-4 left-4" />
-      <h3 style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: "1.1rem", color: "#2d1b1e", textAlign: "center", marginTop: "0.5rem" }}>
+      <h3 className="font-body font-bold text-base md:text-lg text-[#2d1b1e] text-center mt-2 md:mt-0">
         To You!
       </h3>
-      <div style={{ flex: 1, fontFamily: "Inter, sans-serif", fontSize: "clamp(0.78rem, 1.2vw, 0.9rem)", color: "#5a3040", lineHeight: 1.75, whiteSpace: "pre-line" }}>
-        <p className="font-script" style={{ color: "#e8717a", fontSize: "clamp(1rem, 1.8vw, 1.3rem)", fontWeight: 700, marginBottom: "0.75rem" }}>
+      
+      {/* Scrollable message container */}
+      <div className="flex-1 overflow-y-auto max-h-[220px] md:max-h-[260px] font-body text-sm text-[#5a3040] leading-relaxed whitespace-pre-line pr-2 custom-scrollbar">
+        <p className="font-script text-[#e8717a] text-lg md:text-xl font-bold mb-2 text-center md:text-left">
           Happy Birthday, {personNameDisplay} ❤️
         </p>
-        <p style={{ color: "#5a3040", textAlign: "center", width: "100%" }}>
+        <p className="text-left text-[#5a3040] text-sm md:text-base leading-relaxed">
           {cardMessage}
         </p>
       </div>
-      <p className="font-script" style={{ color: "#c94b57", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", fontWeight: 600, textAlign: "center", width: "100%" }}>
+
+      <p className="font-script text-[#c94b57] text-base md:text-lg font-semibold text-center mt-1">
         Your Best Friend.
       </p>
       <HeartDecor className="absolute bottom-4 right-4" />
@@ -194,7 +176,7 @@ export function BirthdayCard() {
                 maxWidth: { duration: 0.8, ease: EASE_CINEMATIC },
               }}
             >
-              <div style={{ display: "flex", width: "100%" }}>
+              <div className="flex flex-col md:flex-row w-full max-h-[85vh] md:max-h-none overflow-y-auto md:overflow-visible rounded-[20px]">
                 <CardLeftPage />
                 <AnimatePresence>
                   {isCardFullyOpen && <CardRightPage key="right-page" />}
