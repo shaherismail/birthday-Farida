@@ -20,7 +20,7 @@ export const siteConfig = {
   title: "Happy 25th Birthday, AYA! 🎂", // عنوان الموقع في المتصفح
   description:
     "A cinematic birthday experience crafted with love for Aya's 25th birthday.", // وصف الموقع
-  url: "https://birthday-Farida.vercel.app", // لينك الموقع بعد الرفع
+  url: "https://birthday-aya-25th.vercel.app", // لينك الموقع بعد الرفع
   ogImage: "/og-image.jpeg", // صورة المعاينة لما تبعت اللينك
 
   // === محتوى الواجهة (Hero Content) ===

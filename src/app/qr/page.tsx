@@ -45,15 +45,8 @@ export default function QRPage() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-        className="w-full max-w-md bg-white p-10 pt-16 rounded-[3rem] shadow-2xl border-4 border-double border-amber-200 flex flex-col items-center text-center relative overflow-hidden print:my-auto"
+        className="w-full max-w-md bg-white p-10 pt-10 rounded-[3rem] shadow-2xl border-4 border-double border-amber-200 flex flex-col items-center text-center relative overflow-hidden print:my-auto"
       >
-        {/* Ribbon / Bow decoration at the top */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gradient-to-b from-[#e8717a] to-[#c94b57] rounded-b-2xl shadow-md z-10 flex items-center justify-center border-x border-b border-pink-200">
-          <span className="text-white text-xs font-bold tracking-widest uppercase">
-
-          </span>
-        </div>
-
         {/* Decorative background blurs */}
         <div className="absolute -top-12 -right-12 w-40 h-40 bg-pink-100/40 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-pink-200/30 rounded-full blur-3xl pointer-events-none" />
