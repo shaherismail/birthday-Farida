@@ -6,18 +6,18 @@
 
 export const siteConfig = {
   // === معلومات الشخص (Identity) ===
-  personName: "Farida", // الاسم البرمجي (يفضل بالانجليزي)
-  personNameDisplay: "Farida", // الاسم الذي سيظهر في الموقع
+  personName: " Aya ", // الاسم البرمجي (يفضل بالانجليزي)
+  personNameDisplay: "Aya", // الاسم الذي سيظهر في الموقع
   profileImage: "/images/profile.jpg", // الصورة الشخصية (اللي في الدائرة)
   senderName: "Your Best Friend", // اسم الشخص اللي باعت الهدية
-  age: 20, // السن
-  birthdayDate: "3 Feb", // تاريخ الميلاد (يوم وشهر)
-  birthdayFull: "February 3rd", // التاريخ بالكامل
+  age: 25, // السن
+  birthdayDate: "8th of June", // تاريخ الميلاد (يوم وشهر)
+  birthdayFull: "June 8th", // التاريخ بالكامل
 
   // === إعدادات المتصفح (Site Meta) ===
-  title: "Happy 20th Birthday, Farida! 🎂", // عنوان الموقع في المتصفح
+  title: "Happy 25th Birthday, AYA! 🎂", // عنوان الموقع في المتصفح
   description:
-    "A cinematic birthday experience crafted with love for Farida's 20th birthday.", // وصف الموقع
+    "A cinematic birthday experience crafted with love for Aya's 25th birthday.", // وصف الموقع
   url: "https://birthday-Farida.vercel.app", // لينك الموقع بعد الرفع
   ogImage: "/og-image.jpg", // صورة المعاينة لما تبعت اللينك
 
@@ -25,32 +25,44 @@ export const siteConfig = {
   hero: {
     line1: "Happy",
     line2: "Birthday",
-    dateBadge: "3 Feb",
-    cta1Label: "Click here Farida", // الكلام اللي على الزرار الأول
-    cta2Label: "Yours Farida", // الكلام اللي على الزرار الثاني
+    dateBadge: "8th of June",
+    cta1Label: "Click here Aya", // الكلام اللي على الزرار الأول
+    cta2Label: "Yours Aya", // الكلام اللي على الزرار الثاني
     scrollHint: "Scroll to explore", // تلميح التمرير لأسفل
   },
 
   // === محتوى التورتة (Cake Scene Content) ===
   cake: {
-    heading: "Happy 20th Birthday!",
+    heading: "Happy 25th Birthday!",
   },
 
   // === محتوى البطاقة / الجواب (Card / Envelope Content) ===
   card: {
-    coverGreeting: "Dear Farida", // التحية على الغلاف
+    coverGreeting: "Dear Aya", // التحية على الغلاف
     coverTitle: "Happy Birthday!",
     coverTeaser: "A surprise message just for you...", // نص تشويقي قبل فتح الجواب
     messageTitle: "To You!",
-    messageBody: `Happy Birthday, Farida ❤️
+    messageBody: `Happy Birthday, Yaya ❤️🎂
 
-From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You brought warmth into the parts of me I didn't even know were cold, And you expanded my days with a dimension I can only call my own.`, // الرسالة نفسها (تقدر تستخدم أكتر من سطر)
-    messageSignature: "Your Best Friend, Farida.", // التوقيع في آخر الرسالة
+To my beautiful Aya, my favorite person, and the girl who somehow manages to make my days better while also driving me a little crazy sometimes 😘
+
+Today is all about you, and honestly, it should be. You deserve all the happiness, love, and cake in the world. (Yes, even the extra slice you’re definitely going to pretend you don’t want and then steal from someone else’s plate. 😂)
+
+Thank you for being the reason behind so many of my smiles, for always making life more exciting, and for putting up with me even when I’m being annoying. That alone deserves an award. 🏆❤️
+
+I hope this year brings you everything you’ve been wishing for—success, happiness, good health, and countless moments that make you smile. And I hope I get to be there for as many of those moments as possible.
+
+No matter how many birthdays come and go, you’ll always be my Yaya, the girl who holds a special place in my heart and makes life brighter just by being in it.
+
+Now go enjoy your birthday, be spoiled, eat lots of cake, and remember that today you’re officially older… but don’t worry, you’re still cute. 😜❤️
+
+Happy Birthday, Yaya. I love you more than words can ever explain. ❤️`, // الرسالة نفسها (تقدر تستخدم أكتر من سطر)
+    messageSignature: "Your Best Friend, Aya.", // التوقيع في آخر الرسالة
   },
 
   // === المحتوى النهائي (Final Section) ===
   final: {
-    heading: "Happy Birthday, Farida!",
+    heading: "Happy Birthday, Aya!",
     subheading: "Wishing you the most magical day 🎉",
     message:
       "May this year bring you everything your heart desires. You deserve all the love, joy, and magic in the world.",
