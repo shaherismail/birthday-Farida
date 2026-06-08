@@ -154,7 +154,7 @@ export function BirthdayCard() {
           />
           <motion.div
             key="birthday-card"
-            className="fixed inset-0 z-[51] flex items-center justify-center p-4"
+            className="fixed inset-0 z-[51] flex items-center justify-center p-6 md:p-4"
             style={{ pointerEvents: "none" }}
           >
             <motion.div
