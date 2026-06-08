@@ -13,6 +13,8 @@ export const siteConfig = {
   age: 25, // السن
   birthdayDate: "8th of June", // تاريخ الميلاد (يوم وشهر)
   birthdayFull: "June 8th", // التاريخ بالكامل
+  musicUrl: "/audio/videoplayback.m4a", // ملف الأغنية الخلفية (مثال: /audio/videoplayback.m4a)
+
 
   // === إعدادات المتصفح (Site Meta) ===
   title: "Happy 25th Birthday, AYA! 🎂", // عنوان الموقع في المتصفح

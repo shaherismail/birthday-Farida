@@ -25,6 +25,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMusicPlayer } from "@/hooks/useMusicPlayer";
+import { siteConfig } from "@/config/site";
 
 // Waveform bars animation — shows when music is playing
 function WaveformBars() {
@@ -63,10 +64,9 @@ function MusicNoteIcon() {
 }
 
 export function MusicPlayer() {
-  // Using a placeholder audio path — replace with actual birthday song
-  // The audio file should be placed in /public/audio/birthday.mp3
+  // Plays the background song configured in siteConfig, defaulting to videoplayback.m4a
   const { isPlaying, toggle } = useMusicPlayer({
-    src: "/audio/birthday.mp3",
+    src: siteConfig.musicUrl || "/audio/videoplayback.m4a",
     volume: 0.3,
     loop: true,
     fadeDuration: 1500,
