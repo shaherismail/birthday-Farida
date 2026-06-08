@@ -92,7 +92,7 @@ function CardRightPage() {
       </h3>
       
       {/* Scrollable message container */}
-      <div className="flex-1 overflow-y-auto max-h-[220px] md:max-h-[260px] font-body text-sm text-[#5a3040] leading-relaxed whitespace-pre-line pr-2 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto max-h-[220px] md:max-h-[260px] font-body text-sm text-[#5a3040] leading-relaxed whitespace-pre-line px-6 pr-4 custom-scrollbar">
         <p className="font-script text-[#e8717a] text-lg md:text-xl font-bold mb-2 text-center md:text-left">
           Happy Birthday, {personNameDisplay} ❤️
         </p>
