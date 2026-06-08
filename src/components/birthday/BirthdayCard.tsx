@@ -158,22 +158,20 @@ export function BirthdayCard() {
             style={{ pointerEvents: "none" }}
           >
             <motion.div
+              className={`pointer-events-auto w-full overflow-hidden transition-all duration-500 ease-in-out ${
+                isCardFullyOpen ? "max-w-[340px] md:max-w-[780px]" : "max-w-[340px]"
+              }`}
               style={{
-                pointerEvents: "auto",
-                maxWidth: isCardFullyOpen ? "780px" : "340px",
-                width: "100%",
                 borderRadius: "20px",
                 boxShadow: "0 24px 80px rgba(45, 27, 30, 0.3), 0 8px 30px rgba(232, 113, 122, 0.2)",
-                overflow: "hidden",
               }}
               initial={{ opacity: 0, scale: 0.85, y: 40 }}
-              animate={{ opacity: 1, scale: 1, y: 0, maxWidth: isCardFullyOpen ? "780px" : "340px" }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -20 }}
               transition={{
                 opacity: { duration: 0.6, ease: EASE_CINEMATIC },
                 scale: { duration: 0.8, ease: EASE_SPRING },
                 y: { duration: 0.8, ease: EASE_SPRING },
-                maxWidth: { duration: 0.8, ease: EASE_CINEMATIC },
               }}
             >
               <div className="flex flex-col md:flex-row w-full max-h-[85vh] md:max-h-none overflow-y-auto md:overflow-visible rounded-[20px]">
