@@ -37,9 +37,8 @@ export function useMusicPlayer({
   const fadeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Initialize audio element on mount (client-side only)
+  // Initialize audio element and handle autoplay on mount
   useEffect(() => {
-    // Audio API only available in browser
     if (typeof window === "undefined") return;
 
     const audio = new Audio(src);
@@ -49,13 +48,64 @@ export function useMusicPlayer({
 
     audioRef.current = audio;
 
+    let hasStarted = false;
+    const startAudio = () => {
+      if (hasStarted || !audioRef.current) return;
+      hasStarted = true;
+
+      audio.play().then(() => {
+        setIsPlaying(true);
+        // Fade in volume
+        const targetVolume = volume;
+        const steps = 30;
+        const stepDuration = fadeDuration / steps;
+        const volumeStep = targetVolume / steps;
+        let currentStep = 0;
+
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = setInterval(() => {
+          currentStep++;
+          if (audioRef.current && currentStep <= steps) {
+            audioRef.current.volume = Math.min(currentStep * volumeStep, targetVolume);
+          } else {
+            if (fadeIntervalRef.current) {
+              clearInterval(fadeIntervalRef.current);
+              fadeIntervalRef.current = null;
+            }
+          }
+        }, stepDuration);
+
+        // Remove listeners once successfully playing
+        cleanupListeners();
+      }).catch(() => {
+        // Reset flag if play was blocked so it can retry on next interaction
+        hasStarted = false;
+      });
+    };
+
+    const cleanupListeners = () => {
+      window.removeEventListener("click", startAudio);
+      window.removeEventListener("touchstart", startAudio);
+      window.removeEventListener("keydown", startAudio);
+    };
+
+    // Try to play immediately (some browser settings allow this)
+    startAudio();
+
+    // Set up listeners for the first interaction to bypass autoplay restrictions
+    window.addEventListener("click", startAudio);
+    window.addEventListener("touchstart", startAudio);
+    window.addEventListener("keydown", startAudio);
+
     // Cleanup on unmount
     return () => {
+      cleanupListeners();
+      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
       audio.pause();
       audio.src = "";
       audioRef.current = null;
     };
-  }, [src, loop]);
+  }, [src, loop, volume, fadeDuration]);
 
   const clearFadeInterval = useCallback(() => {
     if (fadeIntervalRef.current) {

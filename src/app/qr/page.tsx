@@ -45,7 +45,7 @@ export default function QRPage() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-        className="w-full max-w-md bg-white p-10 pt-14 rounded-[3rem] shadow-2xl border-4 border-double border-amber-200 flex flex-col items-center text-center relative overflow-hidden print:shadow-none print:border-none print:my-auto"
+        className="w-full max-w-md bg-white p-10 pt-16 rounded-[3rem] shadow-2xl border-4 border-double border-amber-200 flex flex-col items-center text-center relative overflow-hidden print:my-auto"
       >
         {/* Ribbon / Bow decoration at the top */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gradient-to-b from-[#e8717a] to-[#c94b57] rounded-b-2xl shadow-md z-10 flex items-center justify-center border-x border-b border-pink-200">
@@ -140,17 +140,21 @@ export default function QRPage() {
       {/* Custom Print Styles */}
       <style jsx global>{`
         @media print {
-          body {
-            background: white !important;
+          html, body {
+            background: #fff5f5 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           .print\\:hidden {
             display: none !important;
           }
-          .print\\:shadow-none {
-            box-shadow: none !important;
-          }
-          .print\\:border-none {
-            border: none !important;
+          /* Ensure the background and gradient print exactly */
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
           }
         }
       `}</style>
