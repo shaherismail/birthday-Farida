@@ -1,16 +1,17 @@
 "use client";
 
 // ============================================================
-// useMusicPlayer — Audio management for background music
+// useMusicPlayer — Audio management for background music (Singleton)
 //
-// WHY A HOOK:
-//   Audio is a browser API side-effect. Encapsulating it in a
-//   hook prevents hydration issues (server doesn't have Audio).
-//   Handles: autoplay policy, fade in/out, mobile restrictions,
-//   and cleanup on unmount.
+// WHY SINGLETON:
+//   By maintaining a single global audio instance, we prevent
+//   overlapping playback when multiple components invoke the hook.
+//   It allows any component (e.g. IntroLoader start button) to trigger
+//   playback, and the floating MusicPlayer toggle will automatically
+//   sync with the playing state.
 // ============================================================
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface UseMusicPlayerOptions {
   src: string;
@@ -27,58 +28,76 @@ interface MusicPlayerReturn {
   setVolume: (vol: number) => void;
 }
 
+// Singleton state outside hook
+let globalAudio: HTMLAudioElement | null = null;
+let globalFadeInterval: ReturnType<typeof setInterval> | null = null;
+const subscribers = new Set<(playing: boolean) => void>();
+
 export function useMusicPlayer({
   src,
   volume = 0.35,
   loop = true,
   fadeDuration = 1500,
 }: UseMusicPlayerOptions): MusicPlayerReturn {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const fadeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Initialize audio element and handle autoplay on mount
+  // Sync state with global subscribers
+  useEffect(() => {
+    const handleUpdate = (playing: boolean) => {
+      setIsPlaying(playing);
+    };
+    subscribers.add(handleUpdate);
+
+    if (globalAudio) {
+      setIsPlaying(!globalAudio.paused);
+    }
+
+    return () => {
+      subscribers.delete(handleUpdate);
+    };
+  }, []);
+
+  // Initialize global audio element and handle global window events
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const audio = new Audio(src);
-    audio.loop = loop;
-    audio.volume = 0; // Start silent for fade-in
-    audio.preload = "auto";
-
-    audioRef.current = audio;
+    if (!globalAudio) {
+      globalAudio = new Audio(src);
+      globalAudio.loop = loop;
+      globalAudio.volume = 0; // Start silent for fade-in
+      globalAudio.preload = "auto";
+    }
 
     let hasStarted = false;
     const startAudio = () => {
-      if (hasStarted || !audioRef.current) return;
+      if (hasStarted || !globalAudio || !globalAudio.paused) return;
       hasStarted = true;
 
-      audio.play().then(() => {
-        setIsPlaying(true);
-        // Fade in volume
+      globalAudio.play().then(() => {
+        subscribers.forEach((sub) => sub(true));
+        
+        // Fade in
         const targetVolume = volume;
         const steps = 30;
         const stepDuration = fadeDuration / steps;
         const volumeStep = targetVolume / steps;
         let currentStep = 0;
 
-        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-        fadeIntervalRef.current = setInterval(() => {
+        if (globalFadeInterval) clearInterval(globalFadeInterval);
+        globalFadeInterval = setInterval(() => {
           currentStep++;
-          if (audioRef.current && currentStep <= steps) {
-            audioRef.current.volume = Math.min(currentStep * volumeStep, targetVolume);
+          if (globalAudio && currentStep <= steps) {
+            globalAudio.volume = Math.min(currentStep * volumeStep, targetVolume);
           } else {
-            if (fadeIntervalRef.current) {
-              clearInterval(fadeIntervalRef.current);
-              fadeIntervalRef.current = null;
+            if (globalFadeInterval) {
+              clearInterval(globalFadeInterval);
+              globalFadeInterval = null;
             }
           }
         }, stepDuration);
 
-        // Remove listeners once successfully playing
         cleanupListeners();
       }).catch(() => {
-        // Reset flag if play was blocked so it can retry on next interaction
         hasStarted = false;
       });
     };
@@ -89,96 +108,83 @@ export function useMusicPlayer({
       window.removeEventListener("keydown", startAudio);
     };
 
-    // Try to play immediately (some browser settings allow this)
+    // Attempt autoplay immediately
     startAudio();
 
-    // Set up listeners for the first interaction to bypass autoplay restrictions
+    // Setup global interaction listeners
     window.addEventListener("click", startAudio);
     window.addEventListener("touchstart", startAudio);
     window.addEventListener("keydown", startAudio);
 
-    // Cleanup on unmount
     return () => {
       cleanupListeners();
-      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-      audio.pause();
-      audio.src = "";
-      audioRef.current = null;
     };
   }, [src, loop, volume, fadeDuration]);
 
   const clearFadeInterval = useCallback(() => {
-    if (fadeIntervalRef.current) {
-      clearInterval(fadeIntervalRef.current);
-      fadeIntervalRef.current = null;
+    if (globalFadeInterval) {
+      clearInterval(globalFadeInterval);
+      globalFadeInterval = null;
     }
   }, []);
 
   const fadeIn = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
+    if (!globalAudio) return;
     clearFadeInterval();
 
-    // Play first (may be blocked by browser autoplay policy)
-    audio.play().catch(() => {
-      // Autoplay blocked — user must interact first
-      // This is handled by the music toggle button
-    });
+    globalAudio.play().then(() => {
+      subscribers.forEach((sub) => sub(true));
+    }).catch(() => {});
 
     const targetVolume = volume;
     const steps = 30;
     const stepDuration = fadeDuration / steps;
     const volumeStep = targetVolume / steps;
-
     let currentStep = 0;
-    fadeIntervalRef.current = setInterval(() => {
+
+    globalFadeInterval = setInterval(() => {
       currentStep++;
-      if (audio && currentStep <= steps) {
-        audio.volume = Math.min(currentStep * volumeStep, targetVolume);
+      if (globalAudio && currentStep <= steps) {
+        globalAudio.volume = Math.min(currentStep * volumeStep, targetVolume);
       } else {
         clearFadeInterval();
       }
     }, stepDuration);
-
-    setIsPlaying(true);
   }, [volume, fadeDuration, clearFadeInterval]);
 
   const fadeOut = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
+    if (!globalAudio) return;
     clearFadeInterval();
 
-    const startVolume = audio.volume;
+    const startVolume = globalAudio.volume;
     const steps = 30;
     const stepDuration = fadeDuration / steps;
     const volumeStep = startVolume / steps;
-
     let currentStep = 0;
-    fadeIntervalRef.current = setInterval(() => {
+
+    globalFadeInterval = setInterval(() => {
       currentStep++;
-      if (audio && currentStep <= steps) {
-        audio.volume = Math.max(startVolume - currentStep * volumeStep, 0);
+      if (globalAudio && currentStep <= steps) {
+        globalAudio.volume = Math.max(startVolume - currentStep * volumeStep, 0);
       } else {
-        audio.pause();
+        if (globalAudio) globalAudio.pause();
+        subscribers.forEach((sub) => sub(false));
         clearFadeInterval();
-        setIsPlaying(false);
       }
     }, stepDuration);
   }, [fadeDuration, clearFadeInterval]);
 
   const toggle = useCallback(() => {
-    if (isPlaying) {
+    if (globalAudio && !globalAudio.paused) {
       fadeOut();
     } else {
       fadeIn();
     }
-  }, [isPlaying, fadeIn, fadeOut]);
+  }, [fadeIn, fadeOut]);
 
   const setVolume = useCallback((vol: number) => {
-    if (audioRef.current) {
-      audioRef.current.volume = Math.max(0, Math.min(1, vol));
+    if (globalAudio) {
+      globalAudio.volume = Math.max(0, Math.min(1, vol));
     }
   }, []);
 

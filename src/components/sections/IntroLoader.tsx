@@ -1,56 +1,50 @@
 "use client";
 
 // ============================================================
-// IntroLoader — Phase 1: Pink screen with floating orbs
+// IntroLoader — Phase 1: Pink screen with starting card & floating orbs
 //
 // WHAT IT IS:
-//   The very first thing the user sees. A fullscreen warm-rose
-//   pink background with 4 large floating blur orbs (matching
-//   screenshot 1 exactly) and a thin loading line in the center.
-//
-// EMOTIONAL GOAL:
-//   Warm, soft, inviting. The pink immediately sets the emotional
-//   palette — love, celebration, birthday joy.
-//
-// CINEMATIC PURPOSE:
-//   Creates a "cinema curtain opening" feeling. The smooth fade-in
-//   of the pink background followed by orbs drifting into position
-//   gives the experience a theatrical weight.
-//
-// TIMING:
-//   - Background fades in: 0.8s
-//   - Orbs drift in: staggered 0.3s apart
-//   - Loading line pulses: 1.8s cycle
-//   - Total display: ~2.5s before transitioning to cake scene
-//
-// TRANSITION OUT:
-//   The entire intro fades out (opacity: 0, scale: slightly up)
-//   as the cake scene fades in behind it.
+//   The first view of the site. Displays a premium welcome card
+//   prompting the user to click "Open surprise" to start. This
+//   bypasses browser autoplay restrictions for the background music.
 // ============================================================
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlowOrbs } from "@/components/birthday/FloatingDecorations";
 import { useExperienceStore } from "@/store/experienceStore";
 import { sleep } from "@/lib/utils";
+import { useMusicPlayer } from "@/hooks/useMusicPlayer";
+import { siteConfig } from "@/config/site";
 
 export function IntroLoader() {
   const { phase, setPhase } = useExperienceStore();
   const isVisible = phase === "intro";
+  const [isStarted, setIsStarted] = useState(false);
 
-  // Cinematic timing sequence
+  // Instantiates the global singleton player
+  const { fadeIn } = useMusicPlayer({
+    src: siteConfig.musicUrl || "/audio/videoplayback.m4a",
+  });
+
+  // Cinematic timing sequence runs only after user initiates the entry
   useEffect(() => {
-    if (phase !== "intro") return;
+    if (phase !== "intro" || !isStarted) return;
 
     const sequence = async () => {
-      // Wait for the intro to be visible and orbs to settle
-      await sleep(2800);
+      // Wait for the loading bar animation cycle
+      await sleep(2400);
       // Transition to cake scene
       setPhase("cake");
     };
 
     sequence();
-  }, [phase, setPhase]);
+  }, [phase, setPhase, isStarted]);
+
+  const handleStart = () => {
+    setIsStarted(true);
+    fadeIn(); // Start the background music singleton
+  };
 
   return (
     <AnimatePresence mode="wait">
@@ -69,31 +63,59 @@ export function IntroLoader() {
           }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          {/* === Floating Glow Orbs — matches screenshot 1 exactly === */}
+          {/* === Floating Glow Orbs === */}
           <GlowOrbs />
 
-          {/* === Center Loading Indicator === */}
-          <div className="relative z-10 flex flex-col items-center gap-6">
-            {/* The thin horizontal loading line from screenshot 1 */}
-            <motion.div
-              style={{
-                width: "180px",
-                height: "2px",
-                background: "rgba(255, 255, 255, 0.75)",
-                borderRadius: "2px",
-                transformOrigin: "left center",
-              }}
-              initial={{ scaleX: 0, opacity: 0.5 }}
-              animate={{
-                scaleX: [0, 1, 1],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 2.2,
-                times: [0, 0.7, 1],
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-            />
+          {/* === Center Starting Card or Loader Line === */}
+          <div className="relative z-10 flex flex-col items-center gap-6 px-4">
+            {!isStarted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white/95 p-8 md:p-10 rounded-[2.5rem] shadow-2xl max-w-sm text-center border border-pink-100/50 flex flex-col items-center"
+              >
+                <motion.div
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-5xl mb-4"
+                >
+                  🎁
+                </motion.div>
+                <h1 className="font-display text-[#c94b57] text-3xl mb-2">
+                  You Have a Surprise!
+                </h1>
+                <p className="text-slate-500 text-xs font-semibold mb-6 leading-relaxed">
+                  A beautiful cinematic experience has been crafted with love just for you. Click below to open.
+                </p>
+                <button
+                  onClick={handleStart}
+                  className="px-8 py-4 bg-gradient-to-r from-[#e8717a] to-[#c94b57] text-white font-bold rounded-2xl shadow-xl shadow-pink-200 hover:scale-[1.03] active:scale-95 transition-all cursor-pointer text-sm animate-pulse-glow"
+                >
+                  Open surprise 💖
+                </button>
+              </motion.div>
+            ) : (
+              /* The thin horizontal loading line */
+              <motion.div
+                style={{
+                  width: "180px",
+                  height: "2px",
+                  background: "rgba(255, 255, 255, 0.75)",
+                  borderRadius: "2px",
+                  transformOrigin: "left center",
+                }}
+                initial={{ scaleX: 0, opacity: 0.5 }}
+                animate={{
+                  scaleX: [0, 1, 1],
+                  opacity: [0.5, 1, 0.5],
+                }}
+                transition={{
+                  duration: 2.2,
+                  times: [0, 0.7, 1],
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+              />
+            )}
           </div>
         </motion.div>
       )}

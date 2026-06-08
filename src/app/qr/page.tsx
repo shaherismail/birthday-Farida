@@ -50,7 +50,7 @@ export default function QRPage() {
         {/* Ribbon / Bow decoration at the top */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gradient-to-b from-[#e8717a] to-[#c94b57] rounded-b-2xl shadow-md z-10 flex items-center justify-center border-x border-b border-pink-200">
           <span className="text-white text-xs font-bold tracking-widest uppercase">
-            {firstLetter}&apos;s Surprise 🎁
+            {firstLetter}&apos;
           </span>
         </div>
 
@@ -93,8 +93,8 @@ export default function QRPage() {
             {/* CSS Circular Overlay to make the image round and add a gold/white border */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-[50px] h-[50px] rounded-full bg-white flex items-center justify-center shadow-md border border-amber-200">
-                <img 
-                  src={profileImage} 
+                <img
+                  src={profileImage}
                   alt={personName}
                   className="w-[42px] h-[42px] rounded-full object-cover"
                 />
