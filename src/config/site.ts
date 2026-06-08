@@ -44,19 +44,9 @@ export const siteConfig = {
     messageTitle: "To You!",
     messageBody: `Happy Birthday, Yaya ❤️🎂
 
-To my beautiful Aya, my favorite person, and the girl who somehow manages to make my days better while also driving me a little crazy sometimes 😘
+To my beautiful Aya, my favorite person, and the girl who somehow manages to make my days better while also driving me a little crazy sometimes 😘 Today is all about you, and honestly, it should be. You deserve all the happiness, love, and cake in the world. (Yes, even the extra slice you’re definitely going to pretend you don’t want and then steal from someone else’s plate. 😂)
 
-Today is all about you, and honestly, it should be. You deserve all the happiness, love, and cake in the world. (Yes, even the extra slice you’re definitely going to pretend you don’t want and then steal from someone else’s plate. 😂)
-
-Thank you for being the reason behind so many of my smiles, for always making life more exciting, and for putting up with me even when I’m being annoying. That alone deserves an award. 🏆❤️
-
-I hope this year brings you everything you’ve been wishing for—success, happiness, good health, and countless moments that make you smile. And I hope I get to be there for as many of those moments as possible.
-
-No matter how many birthdays come and go, you’ll always be my Yaya, the girl who holds a special place in my heart and makes life brighter just by being in it.
-
-Now go enjoy your birthday, be spoiled, eat lots of cake, and remember that today you’re officially older… but don’t worry, you’re still cute. 😜❤️
-
-Happy Birthday, Yaya. I love you more than words can ever explain. ❤️`, // الرسالة نفسها (تقدر تستخدم أكتر من سطر)
+Thank you for being the reason behind so many of my smiles, for always making life more exciting, and for putting up with me even when I’m being annoying. That alone deserves an award. 🏆❤️ I hope this year brings you everything you’ve been wishing for—success, happiness, good health, and countless moments that make you smile. And I hope I get to be there for as many of those moments as possible. No matter how many birthdays come and go, you’ll always be my Yaya, the girl who holds a special place in my heart and makes life brighter just by being in it. Now go enjoy your birthday, be spoiled, eat lots of cake, and remember that today you’re officially older… but don’t worry, you’re still cute. 😜❤️ Happy Birthday, Yaya. I love you more than words can ever explain. ❤️`, // الرسالة نفسها (تقدر تستخدم أكتر من سطر)
     messageSignature: "Your Best Friend, Aya.", // التوقيع في آخر الرسالة
   },
 
