@@ -50,7 +50,7 @@ export default function QRPage() {
         {/* Ribbon / Bow decoration at the top */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gradient-to-b from-[#e8717a] to-[#c94b57] rounded-b-2xl shadow-md z-10 flex items-center justify-center border-x border-b border-pink-200">
           <span className="text-white text-xs font-bold tracking-widest uppercase">
-            {firstLetter}&apos;
+
           </span>
         </div>
 
