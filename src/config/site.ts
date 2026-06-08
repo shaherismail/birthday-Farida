@@ -8,7 +8,7 @@ export const siteConfig = {
   // === معلومات الشخص (Identity) ===
   personName: " Aya ", // الاسم البرمجي (يفضل بالانجليزي)
   personNameDisplay: "Aya", // الاسم الذي سيظهر في الموقع
-  profileImage: "/images/profile.jpg", // الصورة الشخصية (اللي في الدائرة)
+  profileImage: "/images/profile.jpeg", // الصورة الشخصية (اللي في الدائرة)
   senderName: "Your Best Friend", // اسم الشخص اللي باعت الهدية
   age: 25, // السن
   birthdayDate: "8th of June", // تاريخ الميلاد (يوم وشهر)
@@ -19,7 +19,7 @@ export const siteConfig = {
   description:
     "A cinematic birthday experience crafted with love for Aya's 25th birthday.", // وصف الموقع
   url: "https://birthday-Farida.vercel.app", // لينك الموقع بعد الرفع
-  ogImage: "/og-image.jpg", // صورة المعاينة لما تبعت اللينك
+  ogImage: "/og-image.jpeg", // صورة المعاينة لما تبعت اللينك
 
   // === محتوى الواجهة (Hero Content) ===
   hero: {
@@ -74,12 +74,12 @@ Happy Birthday, Yaya. I love you more than words can ever explain. ❤️`, // �
     title: "Memories of You", // عنوان قسم الصور
     subheading: "A collection of beautiful moments captured in time.", // الوصف تحت العنوان
     memories: [
-      { image: "/images/memory1.jpg", caption: "The beginning of forever" },
-      { image: "/images/memory2.jpg", caption: "Shared smiles & laughter" },
-      { image: "/images/memory3.jpg", caption: "Every moment is a gift" },
-      { image: "/images/memory4.jpg", caption: "The light of my days" },
-      { image: "/images/memory5.jpg", caption: "Always & Forever" },
-      { image: "/images/memory6.jpg", caption: "Happy 20th, Farida!" },
+      { image: "/images/memory1.jpeg", caption: "The beginning of forever" },
+      { image: "/images/memory2.jpeg", caption: "Shared smiles & laughter" },
+      { image: "/images/memory3.jpeg", caption: "Every moment is a gift" },
+      { image: "/images/memory4.jpeg", caption: "The light of my days" },
+      { image: "/images/memory5.jpeg", caption: "Always & Forever" },
+      { image: "/images/memory6.jpeg", caption: "Happy 20th, Farida!" },
     ],
   },
 

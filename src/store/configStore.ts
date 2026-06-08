@@ -68,6 +68,26 @@ export const useConfigStore = create<ConfigState>()(
     }),
     {
       name: 'birthday-config',
+      version: 1,
+      migrate: (persistedState: any, version: number) => {
+        if (version < 1) {
+          const state = persistedState as any;
+          if (state && typeof state === 'object') {
+            if (typeof state.profileImage === 'string' && state.profileImage.endsWith('.jpg')) {
+              state.profileImage = state.profileImage.replace(/\.jpg$/, '.jpeg');
+            }
+            if (Array.isArray(state.memories)) {
+              state.memories = state.memories.map((m: any) => {
+                if (m && typeof m === 'object' && typeof m.image === 'string' && m.image.endsWith('.jpg')) {
+                  return { ...m, image: m.image.replace(/\.jpg$/, '.jpeg') };
+                }
+                return m;
+              });
+            }
+          }
+        }
+        return persistedState;
+      },
     }
   )
 );
