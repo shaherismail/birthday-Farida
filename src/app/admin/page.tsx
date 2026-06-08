@@ -92,6 +92,12 @@ export default function AdminPage() {
           </div>
           <div className="flex gap-4">
             <button 
+              onClick={() => window.open('/qr', '_blank')}
+              className="px-6 py-3 bg-pink-50 text-[#c94b57] font-semibold rounded-2xl hover:bg-pink-100 transition-all border border-pink-100"
+            >
+              QR Code Card 🎁
+            </button>
+            <button 
               onClick={() => window.open('/', '_blank')}
               className="px-6 py-3 bg-slate-100 text-slate-700 font-semibold rounded-2xl hover:bg-slate-200 transition-all"
             >
